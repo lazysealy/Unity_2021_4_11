@@ -976,6 +976,7 @@ GameObject:
   - component: {fileID: 588607410}
   - component: {fileID: 588607414}
   - component: {fileID: 588607413}
+  - component: {fileID: 588607415}
   m_Layer: 0
   m_Name: "\u73A9\u5BB6"
   m_TagString: Untagged
@@ -1103,6 +1104,26 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.16, y: 2}
   m_Direction: 0
+--- !u!114 &588607415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588607409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcfcbc6c65c14c4409bc7033ff22223a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovingSpeed: 10.5
+  jump: 100
+  HP: 100
+  OnTheGround: 0
+  bullet: {fileID: 0}
+  BulletSpawnPoint: {fileID: 0}
+  BulletSpeed: 800
+  ShotSound: {fileID: 0}
 --- !u!1 &636910330
 GameObject:
   m_ObjectHideFlags: 0

@@ -161,6 +161,20 @@ MonoBehaviour:
   "\u81EA\u8A02\u7FA9\u984F\u8272": {r: 0.3, g: 0, b: 0.6, a: 1}
   "\u81EA\u8A02\u7FA9\u984F\u8272\u5305\u6DB5\u900F\u660E\u5EA6": {r: 0, g: 0.5, b: 0.5,
     a: 1}
+  "v2\u9810\u8A2D": {x: 0, y: 0}
+  "v2\u6578\u503C\u70BA0": {x: 0, y: 0}
+  "v2\u6578\u503C\u70BA1": {x: 1, y: 1}
+  "v2\u81EA\u8A02": {x: 7, y: 9}
+  "\u4E09\u7DAD\u5EA7\u6A19XYZ": {x: 1, y: 2, z: 3}
+  "\u56DB\u7DAD\u5EA7\u6A19XYZW": {x: 1, y: 2, z: 3, w: 4}
+  "\u6309\u9375\u9810\u8A2D": 0
+  "\u6309\u9375\u81EA\u8A02": 97
+  "\u6ED1\u9F20\u6309\u9375": 323
+  "\u6416\u687F\u6309\u9375": 350
+  "\u7269\u4EF61": {fileID: 1562691977}
+  "\u7269\u4EF62": {fileID: 197725003}
+  tra: {fileID: 197725006}
+  spr: {fileID: 197725005}
 --- !u!212 &197725005
 SpriteRenderer:
   m_ObjectHideFlags: 0

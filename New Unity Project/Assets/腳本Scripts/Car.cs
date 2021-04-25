@@ -48,8 +48,30 @@ public class Car : MonoBehaviour
     public Color color;
     public Color 紅 = Color.red;
     public Color 黃 = Color.yellow;
-    public Color 自訂義顏色 = new Color(0.3f,0,0.6f);         //Color(紅,綠,藍)
-    public Color 自訂義顏色包涵透明度 = new Color(0,0.5f,0.5f);  //Color(紅,綠,藍,透明度)
+    public Color 自訂義顏色 = new Color(0.3f,0,0.6f);            //Color(紅,綠,藍)
+    public Color 自訂義顏色包涵透明度 = new Color(0,0.5f,0.5f);   //Color(紅,綠,藍,透明度)
 
     // 座標二維~四維 Vector2~4
+    public Vector2 v2預設;
+    public Vector2 v2數值為0 = Vector2.zero;
+    public Vector2 v2數值為1 = Vector2.one;
+    public Vector2 v2自訂 = new Vector2(7, 9);
+
+    public Vector3 三維座標XYZ = new Vector3(1, 2, 3);
+    public Vector4 四維座標XYZW = new Vector4(1, 2, 3, 4);
+
+    // 按鍵 KeyCode
+    public KeyCode 按鍵預設;                                // 不指定為 None (無)
+    public KeyCode 按鍵自訂 = KeyCode.A;
+    public KeyCode 滑鼠按鍵 = KeyCode.Mouse0;               // 左 0,右 1,滾輪 2
+    public KeyCode 搖桿按鍵 = KeyCode.Joystick1Button0;
+
+    // 遊戲物件與元件
+    // 遊戲物件GameObject
+    public GameObject 物件1;
+    public GameObject 物件2;
+    // 元件 Component - 屬性面板上可摺疊的
+    // 名稱去掉空格
+    public Transform tra;                                   //可儲存任何包含 Transform 元件的物件
+    public SpriteRenderer spr;                              //可儲存任何包含 SpriteRenderer元件的物件
 }
