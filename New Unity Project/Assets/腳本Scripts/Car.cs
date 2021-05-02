@@ -37,20 +37,20 @@ public class Car : MonoBehaviour
     [Tooltip("這是汽車的cc數")]
     [Range(1000, 5000)]
     public int cc = 2000;
-    [Header("汽車重量"),Tooltip("這是汽車重量"),Range(0.5f, 10)]
+    [Header("汽車重量"), Tooltip("這是汽車重量"), Range(0.5f, 10)]
     public float weight = 1.5f;
     [Header("汽車品牌")]
     public string brand = "BMW";
     [Header("有無天窗")]
-    public bool hasWindow = true ;
+    public bool hasWindow = true;
 
     // Unity 常見類型
     // 顏色 Color
     public Color color;
     public Color 紅 = Color.red;
     public Color 黃 = Color.yellow;
-    public Color 自訂義顏色 = new Color(0.3f,0,0.6f);            //Color(紅,綠,藍)
-    public Color 自訂義顏色包涵透明度 = new Color(0,0.5f,0.5f);   //Color(紅,綠,藍,透明度)
+    public Color 自訂義顏色 = new Color(0.3f, 0, 0.6f);            //Color(紅,綠,藍)
+    public Color 自訂義顏色包涵透明度 = new Color(0, 0.5f, 0.5f);   //Color(紅,綠,藍,透明度)
 
     // 座標二維~四維 Vector2~4
     public Vector2 v2預設;
@@ -113,9 +113,21 @@ public class Car : MonoBehaviour
         // 傳回類型 t->名稱(可自行命名) = 傳回方法() ;
         int t = Ten();
         print("傳回方法的結果:" + t);
+
+        Drive50();
+        Drive100();
+        Drive300();
+        // 呼叫方法要有相同數量的參數
+        // 有預設值的參數為【選填式參數】
+        Drive(200, "音效1");
+        Drive(999, "音效2", "爆炸特效");
+        //有多個選填式參數
+        Drive(70, "爆炸特效");          // 錯誤 - 把特效放在音效上
+        Drive(70, effect: "閃電特效");  // 正確 - 指定特效參數
+
     }
 
-    // 更新事件時行時間點與次數：開始事件後以每秒約六十次執行 60FPS
+    // 更新事件時行時間點與次數：開始事件後以每秒約六十次執行 60FPS 
     // 應用：監聽玩家輸入與物件持續行為，例如：玩家有沒有按按鈕或讓物件持續移動
     private void Update()
     {
@@ -128,7 +140,7 @@ public class Car : MonoBehaviour
     #region 方法
     // 方法 : 保存較複雜或演算法的程式區塊
     // 語法 : 
-    // 修飾詞 傳回類型 名稱() { 較複雜或演算法的程式區塊 }
+    // 修飾詞 傳回類型 名稱(參數1，參數2...，參數n) { 較複雜或演算法的程式區塊 }
     // void 無傳回 : 使用這個方法不會有傳回
     // 方法需要被【呼叫】才會執行
     /// <summary>
@@ -148,6 +160,42 @@ public class Car : MonoBehaviour
     private int Ten()
     {
         return 10;
+    }
+
+    // 舉例 :
+    // 三個方法 1. 以時速 50 開車 2.時速 100 3.時速 300
+    // 加新功能 要有音效
+    // 加特效
+    private void Drive50()
+    {
+        print("開車時速:" + 50);
+        print("開車音效");
+    }
+    private void Drive100()
+    {
+        print("開車時速:" + 100);
+        print("開車音效");
+    }
+    private void Drive300()
+    {
+        print("開車時數:" + 300);
+        print("開車音效");
+    }
+
+    //參數解決 Paramater
+    //參數語法：類型 參數名稱
+    /// <summary>
+    /// 這是開車
+    /// </summary>
+    /// <param name="speed">開車的時速</param>
+    /// <param name="sound">開車的音效</param>
+    /// <param name="effect">特效</param>
+    // 有預設值得參數只能寫在最右邊
+    private void Drive(int speed, string sound = "預設音效", string effect = "灰塵效果")
+    {
+        print("開車時速:" + speed);
+        print("開車音效:" + sound);
+        print("特效:" + effect);
     }
     #endregion
 }
