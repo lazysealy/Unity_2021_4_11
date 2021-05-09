@@ -27,19 +27,35 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    #region 事件
 
+    #region 事件
     private void Start()
+    {
+        // 利用程式取得元件
+        // 傳回元件 取得元件<元件名稱>() - <泛型>
+        // 取得跟此腳本同一層的元件
+        Rig2D = GetComponent<Rigidbody2D>();
+    }
+
+    // 一秒約執行 60 次
+    private void Update()
     {
         移動();
         跳躍();
-        開槍();
-        受傷(100);
     }
 
-    private void Update()
-    {
+    [Header("判斷地板碰撞的位移與半徑")]
+    public Vector3 groundOffset;
+    public float groundRadius = 0.2f;
 
+    //繪製圖示 - 輔助編輯時的圖形線條
+    private void OnDrawGizmos()
+    {
+        // 1.指定顏色
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        // 2.繪製圖形
+        // transform 可以抓到此腳本同一層的變形元件
+        Gizmos.DrawSphere(transform.position + groundOffset, groundRadius);
     }
     #endregion
 
@@ -50,7 +66,15 @@ public class Player : MonoBehaviour
     /// </summary>
     private void 移動()
     {
-        print("移動");
+        // 1.要抓到玩家按下左右鍵的資訊
+        float h = Input.GetAxis("Horizontal");
+        //註解print("水平的值:" + h);
+
+        // 2.使用左右鍵的資訊控制角色移動
+        // 鋼體.加速度 = 二維向量(水平 * 速度 * 一幀的時間， 指定回原本的 Y 軸加速度)
+        // 一幀
+        Rig2D.velocity = new Vector2(h * MovingSpeed * Time.deltaTime, Rig2D.velocity.y);
+
     }
 
     /// <summary>
@@ -58,7 +82,31 @@ public class Player : MonoBehaviour
     /// </summary>
     private void 跳躍()
     {
-        print("跳躍");
+        // "如果"玩家按下空白鍵就往上跳躍
+        // 判斷式 C#
+        #region 判斷式 if 基本語法
+
+        /* private bool test1 = true;
+         * Main 等於 Unity 的Start (記得刪除static)
+         * public void Main()
+	{
+		// 判斷式 if 
+        // 語法 :
+        // if (布林值) {當布林值等於 true 時會實行這裡的程式}
+		if (test1)
+		{
+			// Console.WriteLine 等於 Unity 的 print
+			Console.WriteLine("123");
+		}*/
+        #endregion
+        // 傳回值為布林值的方法可以當成布林值使用
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //鋼體.添加推力(二維向量)
+            Rig2D.AddForce(new Vector2(0, jump));
+        }
+
+
     }
 
     /// <summary>
