@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovingSpeed: 896
-  jump: 420
+  jump: 400
   HP: 100
   OnTheGround: 0
   bullet: {fileID: 0}
@@ -6329,7 +6329,7 @@ GameObject:
   - component: {fileID: 1759337259}
   - component: {fileID: 1759337258}
   - component: {fileID: 1759337257}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\u8DF3\u53F0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6855,7 +6855,7 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 145
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
