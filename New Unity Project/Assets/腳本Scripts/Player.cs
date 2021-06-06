@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         Gizmos.color = new Color(1, 0, 0, 0.5f);
         // 2.繪製圖形
         // transform 可以抓到此腳本同一層的變形元件
+        // 繪製球體(中心點，半徑)
         Gizmos.DrawSphere(transform.position + groundOffset, groundRadius);
     }
     #endregion
@@ -82,7 +83,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void 跳躍()
     {
-        // "如果"玩家按下空白鍵就往上跳躍
+        // "如果"玩家 按下 空白鍵 並且 在地板上 就 往上跳躍
         // 判斷式 C#
         #region 判斷式 if 基本語法
 
@@ -99,14 +100,35 @@ public class Player : MonoBehaviour
 			Console.WriteLine("123");
 		}*/
         #endregion
-        // 傳回值為布林值的方法可以當成布林值使用
-        if (Input.GetKeyDown(KeyCode.Space))
+        // ※ 傳回值為布林值的方法可以當成布林值使用
+        // 1. OnTheGround == true (原本寫法)
+        // 2. OnTheGround (簡寫)
+        if (Input.GetKeyDown(KeyCode.Space) && OnTheGround == true)
         {
             //鋼體.添加推力(二維向量)
             Rig2D.AddForce(new Vector2(0, jump));
         }
 
+        // 碰到的物件 = 2D 物理,覆蓋圖形(中心點,半徑,圖層)
+        Collider2D hit = Physics2D.OverlapCircle(transform.position + groundOffset, groundRadius, 1 << 8);
 
+        // print("碰到的物件：" + hit.name);
+
+        // 如果 碰到的物件 存在 而且 碰到的物件名稱 等於 地板 就代表在地板上
+        // 並且 && (Shift + 7
+        // 等於 ==
+
+        if (hit && hit.name == "地板")
+        {
+            OnTheGround = true;
+        }
+        // 否則 不再地板上
+        // 否則 else
+        // 語法 : else { 程式區塊 } - 僅能寫在 if 下方
+        else
+        {
+            OnTheGround = false;
+        }
     }
 
     /// <summary>
