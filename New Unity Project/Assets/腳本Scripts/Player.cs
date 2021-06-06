@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
         // 傳回元件 取得元件<元件名稱>() - <泛型>
         // 取得跟此腳本同一層的元件
         Rig2D = GetComponent<Rigidbody2D>();
+        Ani = GetComponent<Animator>();
+        Aud = GetComponent<AudioSource>();
     }
 
     // 一秒約執行 60 次
@@ -90,6 +92,12 @@ public class Player : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
+
+        //　設定動畫
+        // 水平值 不等於 零 布林值 打勾
+        // 水平值 等於 零 布林值 取消
+        // 不等於 !=
+        Ani.SetBool("走路開關", h != 0);
     }
 
     /// <summary>
