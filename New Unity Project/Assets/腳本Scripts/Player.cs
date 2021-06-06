@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public Transform BulletSpawnPoint;
     [Header("子彈速度"), Range(0, 5000)]
     public int BulletSpeed = 800;
-    [Header("音效"), Tooltip("開槍使用的聲音")]
+    [Header("開槍音效"), Tooltip("開槍使用的聲音")]
     public AudioClip ShotSound;
 
     private AudioSource Aud;
@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     {
         移動();
         跳躍();
+        開槍();
     }
 
     [Header("判斷地板碰撞的位移與半徑")]
@@ -160,7 +161,12 @@ public class Player : MonoBehaviour
     /// </summary>
     private void 開槍()
     {
-        print("開槍");
+        // 如果 玩家按下左鍵 就開槍 - 動畫與音效 發射子彈
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Ani.SetTrigger("攻擊觸發");
+            Aud.PlayOneShot(ShotSound, 0.5f);
+        }
     }
 
     /// <summary>
