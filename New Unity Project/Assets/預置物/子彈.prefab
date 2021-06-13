@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7496950166297930118}
   - component: {fileID: 9045180775105107906}
   - component: {fileID: 8312865084037329551}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: "\u5B50\u5F48"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,8 +117,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.3
+      scalar: 0.15
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4711,7 +4711,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2879e83de1ca29458fd863edcfc70b9, type: 2}
   - {fileID: 2100000, guid: b2879e83de1ca29458fd863edcfc70b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
