@@ -220,7 +220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89850000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.61, y: -3.29, z: 0}
+  m_LocalPosition: {x: 23.69, y: -3.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -279,8 +279,10 @@ MonoBehaviour:
   attack: 10
   cd: 3
   hp: 200
-  radiusTrack: 4.2
+  radiusTrack: 7.7
   radiusAttack: 2
+  groundOffset: {x: 0, y: 0, z: 0}
+  groundRadius: 0.1
 --- !u!1 &149759049
 GameObject:
   m_ObjectHideFlags: 0

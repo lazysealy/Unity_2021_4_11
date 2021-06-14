@@ -24,14 +24,14 @@ public class Enemy : MonoBehaviour
     /// 計時器：紀錄攻擊冷卻
     /// </summary>
     private float timer;
+    /// <summary>
+    /// 原始速度
+    /// </summary>
+    private float speedOriginal;
     #endregion
 
     #region 事件
     private void Start()
-
-
-    
-
     {
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody2D>();
@@ -40,12 +40,13 @@ public class Enemy : MonoBehaviour
         // transform.Find("子物件名稱") - 搜尋此物件的子物件
         player = GameObject.Find("玩家").transform;
 
-        // 讓敵人一開始就進行攻擊
-        timer = cd;
+       
+        timer = cd;                  // 讓敵人一開始就進行攻擊
+        speedOriginal = speed;       // 取得原始速度
     }
 
     [Header("偵測地板的位移與半徑")]
-    public Vector3 geoundOffset;
+    public Vector3 groundOffset;
     public float groundRadius = 0.1f;
 
     private void OnDrawGizmos()
@@ -57,7 +58,7 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawSphere(transform.position, radiusAttack);
 
         Gizmos.color = new Color(0.6f, 0.9f, 1, 0.7f);
-        Gizmos.DrawSphere(transform.position + transform.right * geoundOffset.x + transform.up * geoundOffset.y, groundRadius);
+        Gizmos.DrawSphere(transform.position + transform.right * groundOffset.x + transform.up * groundOffset.y, groundRadius);
     }
 
     private void Update()
@@ -84,8 +85,9 @@ public class Enemy : MonoBehaviour
         else if (dis <= radiusTrack)
         {
             rig.velocity = transform.right * speed * Time.deltaTime;
-            ani.SetBool("走路開關", true);
+            ani.SetBool("走路開關", speed != 0);               // 速度不等於零時 走路 否則 停止
             LookAtPlayer();
+            CheckGround();
         }
         else
         {
@@ -132,9 +134,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 檢查前方是否有地板
+    /// </summary>
+    private void CheckGround()
+    {
+        Collider2D hit = Physics2D.OverlapCircle(transform.position + transform.right * groundOffset.x + transform.up * groundOffset.y, groundRadius, 1 << 8);
 
-
-
+        // 判斷式 程式只有一句 (一個分號) 可以省略 大括號
+        if (hit && (hit.name == "地板" || hit.name == "跳台")) speed = speedOriginal;
+        else speed = 0;
+    }
     #endregion
 
 }
