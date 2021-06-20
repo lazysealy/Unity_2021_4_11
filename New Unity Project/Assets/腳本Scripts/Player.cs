@@ -1,6 +1,6 @@
-﻿
-using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI; //引用 介面 API
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -37,10 +37,22 @@ public class Player : MonoBehaviour
     /// 攻擊力
     /// </summary>
     private float attack = 10;
-    #endregion
 
+
+    #endregion
+    /// <summary>
+    /// 圖片:血條
+    /// </summary>
+    private Image imgHp;
+    /// <summary>
+    /// 文字:生命
+    /// </summary>
+    private Text textHp;
+    private float hpMax;
 
     #region 事件
+
+
     private void Start()
     {
         // 利用程式取得元件
@@ -56,6 +68,15 @@ public class Player : MonoBehaviour
        
         // 2D 物理,忽略圖層的物理碰撞(圖層1,圖層2,是否要忽略)
         Physics2D.IgnoreLayerCollision(9, 10, true);
+
+        // 遊戲物件.尋找("物件名稱 - 絕對不要有相同名稱")
+        // 絕對不要再 Update 系列事件內使用
+        // 不能尋找隱藏物件 會導致錯誤
+        imgHp = GameObject.Find("血條").GetComponent<Image>();
+        textHp = GameObject.Find("生命").GetComponent<Text>();
+        textHp.text = life.ToString();
+        hpMax = HP;
+
     }
 
     // 一秒約執行 60 次
@@ -249,8 +270,16 @@ public class Player : MonoBehaviour
     {
         
         HP -= damage;
+        imgHp.fillAmount = HP / hpMax;      // 圖片長度 = 血量 / 血量最大值
+
         if (HP <= 0) 死亡();
     }
+
+    // 靜態 static
+    // 1.靜態欄位重新載入後不會還原為預設值
+    // 2.靜態欄位不會顯示在屬性面板上
+    [Header("生命數量")]
+    public static int life = 3; 
 
     /// <summary>
     /// 死亡
@@ -258,9 +287,26 @@ public class Player : MonoBehaviour
     /// <returns>是否死亡</returns>
     private bool 死亡()
     {
-        Ani.SetBool("死亡開關", HP <= 0);
+        // 如果 尚未死亡 並且 血量 低於等於 零 才可以執行 死亡
+        if (!Ani.GetBool("死亡開關") && HP <=0)
+        {
+            Ani.SetBool("死亡開關", HP <= 0);
+            life--;                          // 生命遞減
+            textHp.text = life.ToString();   // 更新生命數量
+            Invoke("Replay", 1.5f);
+        }
+       
         return HP <= 0;
     }
+
+    /// <summary>
+    /// 重新遊戲
+    /// </summary>
+    private void Replay()
+    {
+        SceneManager.LoadScene("遊戲畫面");
+    }
+    
 
     /// <summary>
     /// 吃道具
