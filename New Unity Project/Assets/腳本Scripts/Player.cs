@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour
     [Header("子彈速度"), Range(0, 5000)]
     public int BulletSpeed = 800;
     [Header("開槍音效"), Tooltip("開槍使用的聲音")]
-    public AudioClip ShotSound;
+    public AudioClip bulletSound;
     [Header("判斷地板碰撞的位移與半徑")]
     public Vector3 groundOffset;
     public float groundRadius = 0.2f;
@@ -28,7 +29,14 @@ public class Player : MonoBehaviour
     private Rigidbody2D Rig2D;
     private Animator Ani;
     private ParticleSystem ps;
-
+    /// <summary>
+    /// 紀錄按住左鍵的計時器
+    /// </summary>
+    private float timer;
+    /// <summary>
+    /// 攻擊力
+    /// </summary>
+    private float attack = 10;
     #endregion
 
 
@@ -53,15 +61,13 @@ public class Player : MonoBehaviour
     // 一秒約執行 60 次
     private void Update()
     {
+        if (死亡()) return;
         移動();
         跳躍();
         開槍();
     }
 
     
-
-    
-
     //繪製圖示 - 輔助編輯時的圖形線條
     private void OnDrawGizmos()
     {
@@ -149,12 +155,13 @@ public class Player : MonoBehaviour
         }
 
         // 碰到的物件 = 2D 物理,覆蓋圖形(中心點,半徑,圖層)
+        // 圖層語法 : 1 << 圖層編號 (LayerMask int)
         Collider2D hit = Physics2D.OverlapCircle(transform.position + transform.right * groundOffset.x + transform.up * groundOffset.y, groundRadius, 1 << 8);
 
         // print("碰到的物件：" + hit.name);
 
         // 如果 碰到的物件 存在 而且 碰到的物件名稱 等於 地板 就代表在地板上
-        // 並且 && (Shift + 7
+        // 並且 && (Shift + 7)
         // 等於 ==
         // 或者 || (Shift + \)
         // 或者 名稱 等於 跳台
@@ -172,10 +179,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // <summary>
-    // 紀錄按住左鍵的計時器
-    // </summary>
-    private float timer;
+    
 
     /// <summary>
     /// 開槍
@@ -186,20 +190,22 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Ani.SetTrigger("攻擊開關");
+            ps.Play();  //播放集氣
         }
         // 否則如果
         // else if (布林值) { 程式區塊 }
+        // 按住左鍵
         else if (Input.GetKey(KeyCode.Mouse0))
         {
             // 累加 +=
             timer += Time.deltaTime;
-
-            print("按住左鍵的時間:" + timer);
+            // print("按住左鍵的時間:" + timer);
         }
         //放開左鍵
         else if (Input.GetKeyUp(KeyCode.Mouse0))
-        { 
-            Aud.PlayOneShot(ShotSound, 1f);
+        {
+            ps.Stop();   //停止集氣
+            Aud.PlayOneShot(bulletSound, 1f);
 
             // Object.Instantiate(bullet); // 原始寫法
 
@@ -209,6 +215,8 @@ public class Player : MonoBehaviour
             GameObject temp = Instantiate(bullet, transform.position + transform.right * posBullet.x + transform.up * posBullet.y, Quaternion.identity); ;           // 簡寫
             // 暫存物件,取得元件<2D 鋼體>().添加推力(角色的前方 * 子彈速度)
             temp.GetComponent<Rigidbody2D>().AddForce(transform.right * BulletSpeed);
+            // 暫存物件.添加元件<子彈>();
+            temp.AddComponent<Bullet>();
             // 刪除(物件, 延遲秒數)
             Destroy(temp, 2f);
 
@@ -220,6 +228,8 @@ public class Player : MonoBehaviour
 
             // 計時器 = 數學.夾住(計時器．最小．最大)
             timer = Mathf.Clamp(timer, 0, 5);
+            //子彈的攻擊力 = 攻擊力 加上 四捨五入(計時器) * 2
+            temp.GetComponent<Bullet>().attack = attack + (Mathf.Round(timer) + 5) * 4;
 
             // 集氣 : 調整子彈尺寸
             // temp.transform.lossyScale = Vector3.one; // lossyScale 為唯讀 Read Only - 不能指定值 - 此行為錯誤示範 會出現紅色蝌蚪
@@ -235,9 +245,11 @@ public class Player : MonoBehaviour
     /// 受傷
     /// </summary>
     /// <param name="造成傷害">造成的傷害</param>
-    private void 受傷(float 造成傷害)
+    public void 受傷(float damage)
     {
-        print("受傷" + 造成傷害);
+        
+        HP -= damage;
+        if (HP <= 0) 死亡();
     }
 
     /// <summary>
@@ -246,7 +258,8 @@ public class Player : MonoBehaviour
     /// <returns>是否死亡</returns>
     private bool 死亡()
     {
-        return false;
+        Ani.SetBool("死亡開關", HP <= 0);
+        return HP <= 0;
     }
 
     /// <summary>

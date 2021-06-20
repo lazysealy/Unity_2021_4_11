@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 89850004}
   m_Layer: 0
   m_Name: "\u725B"
-  m_TagString: Untagged
+  m_TagString: "\u6575\u4EBA"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -275,14 +275,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffc2f1683953ce44acbde81e61d40dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 150
   attack: 10
   cd: 3
   hp: 200
   radiusTrack: 7.7
   radiusAttack: 2
-  groundOffset: {x: 0, y: 0, z: 0}
-  groundRadius: 0.1
+  groundOffset: {x: -0.06, y: -0.6, z: 0}
+  groundRadius: 0.27
+  attackOffset: {x: 0.94, y: 0.08, z: 0}
+  attackSize: {x: 1.79, y: 1.58, z: 0.1}
 --- !u!1 &149759049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,7 +1349,7 @@ MonoBehaviour:
   OnTheGround: 0
   bullet: {fileID: 7496950166297930117, guid: d27be54175db1314b8a86cd50e454426, type: 3}
   BulletSpeed: 800
-  ShotSound: {fileID: 8300000, guid: e6eaa312b2cfc0149926213090a59e75, type: 3}
+  bulletSound: {fileID: 8300000, guid: e6eaa312b2cfc0149926213090a59e75, type: 3}
   groundOffset: {x: 0.05, y: -0.86, z: 0}
   groundRadius: 0.2
   posBullet: {x: 0.59, y: -0.26, z: 0}
